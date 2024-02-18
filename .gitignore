@@ -1,0 +1,9 @@
+# Ignore config folder
+config/
+
+# Ignore logs folder
+logs/
+
+# Ignore config folder
+__pycache__/
+
