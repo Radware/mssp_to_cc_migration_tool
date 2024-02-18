@@ -13,7 +13,7 @@ os.makedirs(log_dir, exist_ok=True)
 current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 # Main log file with date and time
-main_log_filename = os.path.join(log_dir, 'mssp_migration_full.log')
+main_log_filename = os.path.join(log_dir, f'mssp_migration_full_{current_time}.log')
 # Dry-run log file with date and time
 dry_run_log_filename = os.path.join(log_dir, f'mssp_migration_dry_run_{current_time}.log')
 
@@ -87,7 +87,7 @@ class Vision:
 				"disableDefensePro": disableDefensePro
 			},
 			"parameters": {},
-			"authorizedPOS": self.fetch_full_PO_objects(authorizedPOs)
+			"authorizedPOS": self.fetch_full_PO_objects(authorizedPOs, name)
 		}
 
 		if dry_run:
@@ -98,7 +98,7 @@ class Vision:
 			r = self.sess.post(url=url, json=payload, verify=False)
 			try:
 				response = r.json()
-				logging.info(f"CC Group created: {json.dumps(response, indent=4)}")
+				logging.info(f"CC Group {name} creation status: {json.dumps(response, indent=4)}")
 			except ValueError:
 				logging.error("Failed to decode JSON response")
 				logging.error(r.text)
@@ -151,7 +151,7 @@ class Vision:
 				logging.error("Failed to decode JSON response")
 				logging.error(r.text)
 
-	def fetch_full_PO_objects(self, po_names):
+	def fetch_full_PO_objects(self, po_names, group_name):
 		url = self.base_url + self.auth_POs_path
 		r = self.sess.get(url=url, verify=False)
 		full_pos = []
@@ -160,7 +160,10 @@ class Vision:
 			for po in all_pos['authorizedpos']:
 				if po['poName'] in po_names:
 					full_pos.append(po)
-			logging.info("Fetched full PO objects successfully")
+					logging.info(f"Po {po['poName']} was found and will be added to group {group_name}")
+				else:
+					logging.warning(f"Po {po['poName']} was not found and will not be added to group {group_name}")
+
 		except ValueError:
 			print("Failed to decode JSON response")
 			print(r.text)

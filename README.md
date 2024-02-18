@@ -3,8 +3,11 @@
 This CLI tool automates the process of exporting configuration data from Radware's MSSP platform and importing it into a Cyber Controller. 
 It supports direct export and import operations as well as the ability to save the exported configuration to a file for later use.
 
-When this script runs it creates the following folders, depending on need:
+When this script runs it creates the following folders:
 -   logs: Contains log files generated during the migration process. (always created)
+    -   mssp_migration_full_<date_time>: would contain all actual logs for the migration and responses from CC
+    -   mssp_migration_dry_run_<date_time>: would show you what info would be persisted to CC
+    both files are created for each script execution.
 -   config: Stores JSON files exported from the MSSP platform for later use.
 
 ## Requirements

@@ -296,7 +296,6 @@ if __name__ == '__main__':
             exit(1)
         config = load_config(args.config_file)
 
-    
     # Check if cc_ip, cc_username, and cc_password are provided
     if args.cc_ip and args.cc_username and args.cc_password:
         # Initialize Vision instance and import configuration to CC
