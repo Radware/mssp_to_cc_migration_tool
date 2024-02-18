@@ -1,6 +1,6 @@
 # MSSP to Cyber Controller Configuration Migration Tool
 
-This tool automates the process of exporting configuration data from Radware's MSSP platform and importing it into a Cyber Controller. 
+This CLI tool automates the process of exporting configuration data from Radware's MSSP platform and importing it into a Cyber Controller. 
 It supports direct export and import operations as well as the ability to save the exported configuration to a file for later use.
 
 When this script runs it creates the following folders, depending on need:
