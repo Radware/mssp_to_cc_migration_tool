@@ -1,11 +1,24 @@
 import requests
 import json, sys, os
-import pprint, argparse
+import pprint, argparse, logging
 from datetime import datetime
 from Vision import Vision  # Ensure this is correctly imported from your Vision class file
 
 # Disable warnings for unverified HTTPS requests
 requests.packages.urllib3.disable_warnings()
+
+# Define the directory for logs
+log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
+# Ensure the directory exists
+os.makedirs(log_dir, exist_ok=True)
+
+
+# Main log file with date and time
+main_log_filename = os.path.join(log_dir, f'mssp_migration_full.log')
+
+# Set up the main logger
+logging.basicConfig(filename=main_log_filename, level=logging.INFO, 
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
 def load_config(filename):
     """Load the JSON configuration from a file."""
@@ -18,9 +31,12 @@ def import_mssp_config(vision, config, new_user_password="Radware1!", dry_run=Fa
         for group in config:
             cc_group_name = (group["Account Name"] + "_" + group["Account OID"])[:31]
             poList = group["Assets"]
-            vision.create_cc_group(cc_group_name, poList, dry_run=dry_run)
-            for user in group["Users"]:
-                vision.add_user_to_group(user, cc_group_name, password=new_user_password, dry_run=dry_run)
+            if vision.create_cc_group(cc_group_name, poList, dry_run=dry_run):
+                for user in group["Users"]:
+                    vision.add_user_to_group(user, cc_group_name, password=new_user_password, dry_run=dry_run)
+            else:
+                logging.error(f"couldn't create group {cc_group_name}, skipping it completly. \n please check the logs and try again.")
+                print(f"couldn't create group {cc_group_name}, skipping it completly. \n please check the logs and try again.")
 
 def login(url, username, password):
     payload = f'u={username}&p={password}'
@@ -261,10 +277,10 @@ def save_data_to_json_file(data, base_filename):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='MSSP to CC Configuration Migration Tool')
-    parser.add_argument('--mssp-address', required=True, help='MSSP server address')
+    parser.add_argument('--mssp-address', required=True, help='IP/FQDN address of the MSSP portal')
     parser.add_argument('--mssp-username', required=True, help='MSSP login username')
     parser.add_argument('--mssp-password', required=True, help='MSSP login password')
-    parser.add_argument('--cc-ip', required=False, help='IP address of the Cyber Controller')
+    parser.add_argument('--cc-address', required=False, help='IP/FQDN address of the Cyber Controller')
     parser.add_argument('--cc-username', required=False, help='Username for the Cyber Controller')
     parser.add_argument('--cc-password', required=False, help='Password for the Cyber Controller')
     parser.add_argument('--export-file', required=False, help='Filename to save exported MSSP configuration, if not importing directly')

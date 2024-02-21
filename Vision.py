@@ -13,7 +13,7 @@ os.makedirs(log_dir, exist_ok=True)
 current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 # Main log file with date and time
-main_log_filename = os.path.join(log_dir, f'mssp_migration_full_{current_time}.log')
+main_log_filename = os.path.join(log_dir, f'mssp_migration_full.log')
 # Dry-run log file with date and time
 dry_run_log_filename = os.path.join(log_dir, f'mssp_migration_dry_run_{current_time}.log')
 
@@ -76,6 +76,7 @@ class Vision:
 	def create_cc_group(self, name, authorizedPOs, disableNetworkAnalytics=True, 
 					allowActivateOperations=False, disableSecurityOperations=True, 
 					disableReporting=True, disableDefensePro=True, dry_run=False):
+		success = True  # Initialize success flag as True
 		payload = {
 			"name": name,
 			"requireDeviceLock": True,
@@ -92,16 +93,24 @@ class Vision:
 
 		if dry_run:
 			dry_run_logger.info(f"Dry run: Would create CC group with payload: {json.dumps(payload, indent=4)}")
-			logging.info("Dry Run Mode, skipping create group")
+			logging.info("Dry Run Mode, skipping create group, assuming success")
 		else:
 			url = self.base_url + self.cc_group_path
 			r = self.sess.post(url=url, json=payload, verify=False)
 			try:
 				response = r.json()
-				logging.info(f"CC Group {name} creation status: {json.dumps(response, indent=4)}")
+				if response.get('status') == 'error':
+					logging.error(f"Group creation failed: {response['message']}")
+					success = False  # Set success to False if there's an error
+				else:
+					logging.info(f"CC Group {name} creation status: {json.dumps(response, indent=4)}")
+					# success remains True if creation was successful
 			except ValueError:
 				logging.error("Failed to decode JSON response")
 				logging.error(r.text)
+				success = False  # Set success to False if there was an issue processing the response
+
+		return success  # Return the success flag indicating the outcome
 
 	def add_user_to_group(self, user, group_name, password="Radware1!",
 						allowActivateOperations=False, disableNetworkAnalytics=False, disableDefensePro=False,
@@ -142,14 +151,23 @@ class Vision:
 			url = self.base_url + self.cc_user_path
 			r = self.sess.post(url=url, json=payload, verify=False)
 			try:
-				response = r.json()
-				if response.get("status") == "error":
-					logging.error(f"Error adding user {user['Username']} to group {group_name}: {response['message']}")
+				if r.status_code == 500:
+					logging.error(f"Internal Server Error when trying to add user {user['Username']} to group {group_name}.")
+					success = False
 				else:
-					logging.info(f"User {user['Username']} added to group {group_name}")
+					response = r.json()
+					if response.get("status") == "error":
+						logging.error(f"Error adding user {user['Username']} to group {group_name}: {response['message']}")
+						success = False  # Set success to False if there's an error
+					else:
+						logging.info(f"User {user['Username']} added to group {group_name}")
+						# success remains True if user was added successfully
 			except ValueError:
 				logging.error("Failed to decode JSON response")
 				logging.error(r.text)
+				success = False  # Set success to False if there was an issue processing the response
+
+		return success  # Return the success flag indicating the outcome
 
 	def fetch_full_PO_objects(self, po_names, group_name):
 		url = self.base_url + self.auth_POs_path
