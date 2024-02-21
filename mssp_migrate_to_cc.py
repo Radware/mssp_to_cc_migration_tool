@@ -35,7 +35,7 @@ def import_mssp_config(vision, config, new_user_password="Radware1!", dry_run=Fa
                 for user in group["Users"]:
                     vision.add_user_to_group(user, cc_group_name, password=new_user_password, dry_run=dry_run)
             else:
-                logging.error(f"couldn't create group {cc_group_name}, skipping it completly. \n please check the logs and try again.")
+                logging.error(f"couldn't create group {cc_group_name}, skipping it completly.")
                 print(f"couldn't create group {cc_group_name}, skipping it completly. \n please check the logs and try again.")
 
 def login(url, username, password):
@@ -313,9 +313,9 @@ if __name__ == '__main__':
         config = load_config(args.config_file)
 
     # Check if cc_ip, cc_username, and cc_password are provided
-    if args.cc_ip and args.cc_username and args.cc_password:
+    if args.cc_address and args.cc_username and args.cc_password:
         # Initialize Vision instance and import configuration to CC
-        vision = Vision(args.cc_ip, args.cc_username, args.cc_password)
+        vision = Vision(args.cc_address, args.cc_username, args.cc_password)
         import_mssp_config(vision, config, dry_run=args.dry_run)
     elif args.dry_run:
         print("Warning: dry run was requested but some or all of the following args are missing: CC IP address, CC username, CC password.")

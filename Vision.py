@@ -178,9 +178,9 @@ class Vision:
 			for po in all_pos['authorizedpos']:
 				if po['poName'] in po_names:
 					full_pos.append(po)
-					logging.info(f"Po {po['poName']} was found and will be added to group {group_name}")
+					logging.info(f"Po {po['poName']} was found in autherizedPOs and will be added to group {group_name}")
 				else:
-					logging.warning(f"Po {po['poName']} was not found and will not be added to group {group_name}")
+					logging.warning(f"Po {po['poName']} was not found in autherizedPOs and will not be added to group {group_name}")
 
 		except ValueError:
 			print("Failed to decode JSON response")
