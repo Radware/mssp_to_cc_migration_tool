@@ -2,7 +2,7 @@ import logging
 from requests import Session, packages
 import json, os
 from urllib3.exceptions import InsecureRequestWarning
-from datetime import datetime
+#from datetime import datetime
 
 # Define the directory for logs
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
@@ -10,12 +10,12 @@ log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
 os.makedirs(log_dir, exist_ok=True)
 
 # Format the current date and time to include in the log filename
-current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+#current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 # Main log file with date and time
 main_log_filename = os.path.join(log_dir, f'mssp_migration_full.log')
 # Dry-run log file with date and time
-dry_run_log_filename = os.path.join(log_dir, f'mssp_migration_dry_run_{current_time}.log')
+dry_run_log_filename = os.path.join(log_dir, f'mssp_migration_dry_run.log')
 
 # Set up the main logger
 logging.basicConfig(filename=main_log_filename, level=logging.INFO, 
@@ -112,7 +112,7 @@ class Vision:
 
 		return success  # Return the success flag indicating the outcome
 
-	def add_user_to_group(self, user, group_name, password="Radware1!",
+	def add_user_to_group(self, user, group_name, password="P@ssw0rd1!",
 						allowActivateOperations=False, disableNetworkAnalytics=False, disableDefensePro=False,
 						disableSecurityOperations=False, disableReporting=False, dry_run=False):
 		success = True  # Initialize success flag as True
@@ -267,4 +267,4 @@ if __name__ == '__main__':
 			poList = group["Assets"]
 			v.create_cc_group(cc_group_name, poList, dry_run=dry_run)
 			for user in group["Users"]:
-				v.add_user_to_group(user,cc_group_name,password="Radware1!", dry_run=dry_run)
+				v.add_user_to_group(user,cc_group_name,password="P@ssw0rd1!", dry_run=dry_run)

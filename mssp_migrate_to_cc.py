@@ -25,7 +25,7 @@ def load_config(filename):
     with open(filename, 'r') as file:
         return json.load(file)
 
-def import_mssp_config(vision, config, new_user_password="Radware1!", dry_run=False):
+def import_mssp_config(vision, config, new_user_password="P@ssw0rd1!", dry_run=False):
     """Import MSSP configuration into Cyber Controller."""
     if vision.login():
         for group in config:
@@ -287,8 +287,8 @@ if __name__ == '__main__':
     parser.add_argument('--import-from-file', action='store_true', help='Set this flag to import configuration from a file instead of directly exporting from MSSP')
     parser.add_argument('--config-file', required=False, help='Path to the configuration JSON file for import, required if --import-from-file is set')
     parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode without making actual changes')
-    parser.add_argument('--created-users-default-password', required=False, help='Default password for any users created during migration')
-    
+    parser.add_argument('--initial-user-password', required=False, help='Override default password, affects all users configured during migration. Initial default is P@ssw0rd1!')
+
     try:
         args = parser.parse_args()
     except SystemExit as e:
@@ -326,6 +326,10 @@ if __name__ == '__main__':
     if args.cc_address and args.cc_username and args.cc_password:
         # Initialize Vision instance and import configuration to CC
         vision = Vision(args.cc_address, args.cc_username, args.cc_password)
-        import_mssp_config(vision, config, dry_run=args.dry_run)
+        if not args.export_file:
+            if not args.initial_user_password:
+                import_mssp_config(vision, config, dry_run=args.dry_run)
+            else:
+                import_mssp_config(vision, config, new_user_password=args.initial_user_password, dry_run=args.dry_run)
     elif args.dry_run:
         print("Warning: dry run was requested but some or all of the following args are missing: CC IP address, CC username, CC password.")
