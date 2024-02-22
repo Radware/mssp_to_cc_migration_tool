@@ -28,18 +28,23 @@ The script can be executed in two main modes: direct migration and file-based mi
 ### Direct Migration
 
 To export from MSSP and import to Cyber Controller, use the following command:
-```bash mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --mssp-password <MSSP_PASSWORD> --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> [--created-users-default-password <DEFAULT_PASSWORD>] [--dry-run]```
+```bash 
+mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --mssp-password <MSSP_PASSWORD> --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> [--created-users-default-password <DEFAULT_PASSWORD>] [--dry-run]
+```
 
 ### File-based Migration
 
 To export the MSSP configuration to a file:
 
-```bash mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --mssp-password <MSSP_PASSWORD> --export-file <FILENAME.json>```
+```bash
+mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --mssp-password <MSSP_PASSWORD> --export-file <FILENAME.json>
+```
 
 
 To import configuration from a file to the Cyber Controller:
-
-```bash mssp_migrate_to_cc.py --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> --config-file <FILENAME.json> --import-from-file [--created-users-default-password <DEFAULT_PASSWORD>] [--dry-run]```
+```bash
+mssp_migrate_to_cc.py --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> --config-file <FILENAME.json> --import-from-file [--created-users-default-password <DEFAULT_PASSWORD>] [--dry-run]
+```
 
 ## Options
 
