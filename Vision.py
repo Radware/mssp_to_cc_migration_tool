@@ -115,6 +115,7 @@ class Vision:
 	def add_user_to_group(self, user, group_name, password="Radware1!",
 						allowActivateOperations=False, disableNetworkAnalytics=False, disableDefensePro=False,
 						disableSecurityOperations=False, disableReporting=False, dry_run=False):
+		success = True  # Initialize success flag as True
 		url = self.base_url + self.cc_user_path
 		payload = {
 			"name": user["Username"],

@@ -252,7 +252,7 @@ def build_structured_export(session_id, mssp_address):
     
     return all_accounts_info
 
-def save_data_to_json_file(data, base_filename):
+def save_data_to_json_file(data, base_filename="export"):
     """
     Saves given data to a JSON file with the current date appended before the file extension.
 
@@ -288,8 +288,18 @@ if __name__ == '__main__':
     parser.add_argument('--config-file', required=False, help='Path to the configuration JSON file for import, required if --import-from-file is set')
     parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode without making actual changes')
     parser.add_argument('--created-users-default-password', required=False, help='Default password for any users created during migration')
- 
-    args = parser.parse_args()
+    
+    try:
+        args = parser.parse_args()
+    except SystemExit as e:
+        # Log the error
+        logging.error("Error parsing arguments.")
+
+        # Print a custom error message and the help message from argparse
+        print("Error: Failed to parse the arguments. Please check the input arguments.")
+        parser.print_help()
+
+        sys.exit(e.code)
 
     # Direct export from MSSP and import to CC
     if not args.import_from_file:
