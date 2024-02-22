@@ -5,7 +5,7 @@ It supports direct export and import operations as well as the ability to save t
 
 When this script runs it creates the following folders:
 -   logs: Contains log files generated during the migration process. (always created)
-    -   mssp_migration_full_<date_time>: would contain all actual logs for the migration and responses from CC
+    -   mssp_migration_full: would contain all actual logs for the migration and responses from CC
     -   mssp_migration_dry_run_<date_time>: would show you what info would be persisted to CC
     both files are created for each script execution.
 -   config: Stores JSON files exported from the MSSP platform for later use.
@@ -28,18 +28,18 @@ The script can be executed in two main modes: direct migration and file-based mi
 ### Direct Migration
 
 To export from MSSP and import to Cyber Controller, use the following command:
-```mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --mssp-password <MSSP_PASSWORD> --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> [--created-users-default-password <DEFAULT_PASSWORD>] [--dry-run]```
+```bash mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --mssp-password <MSSP_PASSWORD> --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> [--created-users-default-password <DEFAULT_PASSWORD>] [--dry-run]```
 
 ### File-based Migration
 
 To export the MSSP configuration to a file:
 
-```mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --mssp-password <MSSP_PASSWORD> --export-file <FILENAME.json>```
+```bash mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --mssp-password <MSSP_PASSWORD> --export-file <FILENAME.json>```
 
 
 To import configuration from a file to the Cyber Controller:
 
-```mssp_migrate_to_cc.py --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> --config-file <FILENAME.json> --import-from-file [--created-users-default-password <DEFAULT_PASSWORD>] [--dry-run]```
+```bash mssp_migrate_to_cc.py --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> --config-file <FILENAME.json> --import-from-file [--created-users-default-password <DEFAULT_PASSWORD>] [--dry-run]```
 
 ## Options
 

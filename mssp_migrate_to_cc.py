@@ -288,7 +288,7 @@ if __name__ == '__main__':
     parser.add_argument('--config-file', required=False, help='Path to the configuration JSON file for import, required if --import-from-file is set')
     parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode without making actual changes')
     parser.add_argument('--created-users-default-password', required=False, help='Default password for any users created during migration')
-
+ 
     args = parser.parse_args()
 
     # Direct export from MSSP and import to CC
