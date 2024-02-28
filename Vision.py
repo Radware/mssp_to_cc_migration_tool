@@ -73,9 +73,9 @@ class Vision:
 			logging.error("Failed to decode JSON response")
 			logging.error(r.text)
 
-	def create_cc_group(self, name, authorizedPOs, disableNetworkAnalytics=True, 
-					allowActivateOperations=False, disableSecurityOperations=True, 
-					disableReporting=True, disableDefensePro=True, dry_run=False):
+	def create_cc_group(self, name, authorizedPOs, disableNetworkAnalytics=False, 
+					allowActivateOperations=False, disableSecurityOperations=False, 
+					disableReporting=False, disableDefensePro=False, dry_run=False):
 		success = True  # Initialize success flag as True
 		payload = {
 			"name": name,

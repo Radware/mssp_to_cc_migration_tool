@@ -43,18 +43,22 @@ def login(url, username, password):
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
     }
-    response = requests.post(url, headers=headers, data=payload, verify=False)
-    if response.status_code == 200:
-        print("MSSP: Login successful")
-        # Extract sessionid from cookies
-        sessionid = response.cookies.get('sessionid')
-        if sessionid:
-            return sessionid
+    try:
+        response = requests.post(url, headers=headers, data=payload, verify=False)
+        if response.status_code == 200:
+            print("MSSP: Login successful")
+            # Extract sessionid from cookies
+            sessionid = response.cookies.get('sessionid')
+            if sessionid:
+                return sessionid
+            else:
+                print("Session ID not found in cookies")
         else:
-            print("Session ID not found in cookies")
-    else:
-        print(f"Login failed with status code {response.status_code}")
+            print(f"Login failed with status code {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
     return None
+
 
 def fetch_all_accounts(session_id, mssp_address):
     accounts_url = f"https://{mssp_address}/api/accounts/"
@@ -196,18 +200,7 @@ def build_assets_info(assets):
     """
     assets_info_list = []
 
-    for asset in assets:
-        # Object approach (removed for now)
-        # asset_info = {
-        #     #"Site Name": asset.get('site_name', 'N/A'),
-        #     #"Type": asset.get('type', 'N/A'),
-        #     #"Status": asset.get('status', 'N/A'),
-        #     #"Address": asset.get('address', 'N/A'),
-        #     #"Mask": asset.get('mask', 'N/A'),
-        #     "Policies": 
-        # }
-        # assets_info_list.append(asset_info)
-        
+    for asset in assets:        
         # List approach
         assets_info_list.append(", ".join(asset.get('policies', [])))
 
@@ -288,6 +281,18 @@ if __name__ == '__main__':
     parser.add_argument('--config-file', required=False, help='Path to the configuration JSON file for import, required if --import-from-file is set')
     parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode without making actual changes')
     parser.add_argument('--initial-user-password', required=False, help='Override default password, affects all users configured during migration. Initial default is P@ssw0rd1!')
+
+    sys.argv = [
+        'mssp_migrate_to_cc.py',  # Script name
+        '--mssp-address', '10.26.45.16',
+        '--mssp-username', 'admin@radware.com',
+        '--mssp-password', 'radware',
+        '--cc-address', '172.17.154.101',
+        '--cc-username', 'radware',
+        '--cc-password', 'radware',
+        #'--config-file', 'solution\config\export_2024-02-22_16-46-54.json',
+        #'--import-from-file'
+    ]
 
     try:
         args = parser.parse_args()
