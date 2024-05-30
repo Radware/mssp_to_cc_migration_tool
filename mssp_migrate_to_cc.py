@@ -285,11 +285,11 @@ if __name__ == '__main__':
     # sys.argv = [
     #     'mssp_migrate_to_cc.py',  # Script name
     #     '--mssp-address', '10.26.45.16',
-    #     '--mssp-username', 'admin@radware.com',
-    #     '--mssp-password', 'radware',
+    #     '--mssp-username', 'admin@local.com',
+    #     '--mssp-password', 'password',
     #     '--cc-address', '172.17.154.101',
-    #     '--cc-username', 'radware',
-    #     '--cc-password', 'radware',
+    #     '--cc-username', 'username',
+    #     '--cc-password', 'password',
     #     #'--config-file', 'solution\config\export_2024-02-22_16-46-54.json',
     #     #'--import-from-file'
     # ]
