@@ -282,17 +282,17 @@ if __name__ == '__main__':
     parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode without making actual changes')
     parser.add_argument('--initial-user-password', required=False, help='Override default password, affects all users configured during migration. Initial default is P@ssw0rd1!')
 
-    sys.argv = [
-        'mssp_migrate_to_cc.py',  # Script name
-        '--mssp-address', '10.26.45.16',
-        '--mssp-username', 'admin@radware.com',
-        '--mssp-password', 'radware',
-        '--cc-address', '172.17.154.101',
-        '--cc-username', 'radware',
-        '--cc-password', 'radware',
-        #'--config-file', 'solution\config\export_2024-02-22_16-46-54.json',
-        #'--import-from-file'
-    ]
+    # sys.argv = [
+    #     'mssp_migrate_to_cc.py',  # Script name
+    #     '--mssp-address', '10.26.45.16',
+    #     '--mssp-username', 'admin@radware.com',
+    #     '--mssp-password', 'radware',
+    #     '--cc-address', '172.17.154.101',
+    #     '--cc-username', 'radware',
+    #     '--cc-password', 'radware',
+    #     #'--config-file', 'solution\config\export_2024-02-22_16-46-54.json',
+    #     #'--import-from-file'
+    # ]
 
     try:
         args = parser.parse_args()
