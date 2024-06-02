@@ -64,7 +64,7 @@ mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNA
 
 To import configuration from a file to the Cyber Controller:
 ```bash
-mssp_migrate_to_cc.py --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> --config-file <FILENAME.json> --import-from-file [--initial-user-password <DEFAULT_PASSWORD>] [--dry-run]
+mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> --config-file <FILENAME.json> --import-from-file [--initial-user-password <DEFAULT_PASSWORD>] [--dry-run]
 ```
 
 ## Options
