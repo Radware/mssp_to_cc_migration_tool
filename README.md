@@ -54,7 +54,7 @@ To export from MSSP and import to Cyber Controller, use the following command:
 ```bash
 mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --mssp-password <MSSP_PASSWORD> --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> [--initial-user-password <DEFAULT_PASSWORD>] [--dry-run]
 ```
-
+##### default password: P@ssw0rd1!
 ### File-based Migration
 
 To export the MSSP configuration to a file:
@@ -66,7 +66,7 @@ To import configuration from a file to the Cyber Controller:
 ```bash
 mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNAME> --cc-address <CC_IP> --cc-username <CC_USERNAME> --cc-password <CC_PASSWORD> --config-file <FILENAME.json> --import-from-file [--initial-user-password <DEFAULT_PASSWORD>] [--dry-run]
 ```
-
+##### default password: P@ssw0rd1!
 ## Options
 
 - `--mssp-address`: The IP address or hostname of the MSSP platform.
