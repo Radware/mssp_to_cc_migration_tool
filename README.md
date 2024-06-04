@@ -78,23 +78,23 @@ mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNA
 - **Username**
 - **User Full Name** (A mandatory field in the legacy MSSP Portal)
 - **User Role**, according to the following mapping:
-  >> Tenant Viewer -> User-Monitor
-  >> Tenant User -> User-Basic
-  >> Tenant Admin -> User-Admin
+  >> - Tenant Viewer -> User-Monitor
+  >> - Tenant User -> User-Basic
+  >> - Tenant Admin -> User-Admin
   >> *If there are more than one role in the legacy MSSP Portal, the higher will be fetched.*
 - **E-mail** (A mandatory field in the legacy MSSP Portal)
 
 - **Optional fields (if they exist):**
-  >> Details
-  >> Allow login only from this IP Address
+  >> - Details
+  >> - Allow login only from this IP Address
 
 - **Default fields (regardless of the legacy users):**
-  >> **Password** – all the users will get the following default password: `P@ssw0rd1!`
-  >> **Password Change on next login** (checkbox) - enabled by default.
-  >> **Allow user to activate Operations** (checkbox) – disabled by default. This checkbox is disabled by default for the entire account group, hence it does not appear for the users. To enable it for a specific user, you should enable it for the entire group first.
-  >> **Network Analytics page** - enabled by default.
-  >> **Extended Analytics package** - enabled by default.
-  >> **Security Operations page** - enabled by default.
-  >> **Reporting pages** - enabled by default.
+  >> - **Password** – all the users will get the following default password: `P@ssw0rd1!`
+  >> - **Password Change on next login** (checkbox) - enabled by default.
+  >> - **Allow user to activate Operations** (checkbox) – disabled by default. This checkbox is disabled by default for the entire account group, hence it does not appear for the users. To enable it for a specific user, you should enable it for the entire group first.
+  >> - **Network Analytics page** - enabled by default.
+  >> - **Extended Analytics package** - enabled by default.
+  >> - **Security Operations page** - enabled by default.
+  >> - **Reporting pages** - enabled by default.
 
 - All the other fields of the legacy product are ignored.
