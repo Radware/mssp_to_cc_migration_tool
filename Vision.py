@@ -135,8 +135,8 @@ class Vision:
 			},
 			"msspUserSettings": {
 				"changePassword": True,
-				"permittedIPAddress": "",
-				"userDetails": "",
+				"permittedIPAddress": user["Allowed IP Address"],
+				"userDetails": user["Notes"],
 				"allowActivateOperations": allowActivateOperations,
 				"disableNetworkAnalytics": disableNetworkAnalytics,
 				"disableDefensePro": disableDefensePro,

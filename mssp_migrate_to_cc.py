@@ -152,17 +152,16 @@ def select_new_role(current_roles):
 
     return None  # Return None if no roles match
 
-
 def build_users_info(filtered_users):
     """
-    Builds a dictionary of users with selected information, including their roles from currentAccount,
-    and determines the new role based on these roles.
+    Builds a list of users with selected information, including their roles from currentAccount,
+    allowed IP addresses, 'notes', and determines the new role based on these roles.
 
     Parameters:
     - filtered_users: A list of user objects, each being a dict with user details.
 
     Returns:
-    - dict: A dictionary where each key is a username, and its value is a dict of user info including the new role.
+    - list: A list where each item is a dict of user info including the new role, allowed IPs, and notes.
     """
     users_info = []
 
@@ -171,7 +170,10 @@ def build_users_info(filtered_users):
         account_oid = user.get('account', {}).get('_oid', 'N/A')
         current_account_roles = user.get('roles', {}).get('currentAccount', [])
         roles_string = ', '.join(current_account_roles) if current_account_roles else 'None'
-        new_role = select_new_role(current_account_roles)  # Determine the new role
+        new_role = select_new_role(current_account_roles)  # Determine the new role based on the current roles
+        allowed_ips = user.get('auth_meta', {}).get('allowed_ip_list', [])
+        first_ip = allowed_ips[0] if allowed_ips else ''
+        notes = user.get('notes', '')  # Retrieve notes, default to empty string if not present
 
         user_info = {
             "Name": user.get('name'),
@@ -181,7 +183,9 @@ def build_users_info(filtered_users):
             "Auth Type": user.get('auth_type'),
             "Account OID": account_oid,
             "Role (Current)": roles_string,
-            "New Role": new_role
+            "New Role": new_role,
+            "Allowed IP Address": first_ip,  # Convert list of IPs to string
+            "Notes": notes  # Add notes to the user info
         }
 
         users_info.append(user_info)
