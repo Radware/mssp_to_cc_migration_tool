@@ -270,9 +270,9 @@ def save_data_to_json_file(data, base_filename="export"):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='MSSP to CC Configuration Migration Tool')
-    parser.add_argument('--mssp-address', required=True, help='IP/FQDN address of the MSSP portal')
-    parser.add_argument('--mssp-username', required=True, help='MSSP login username')
-    parser.add_argument('--mssp-password', required=True, help='MSSP login password')
+    parser.add_argument('--mssp-address', required=False, help='IP/FQDN address of the MSSP portal')
+    parser.add_argument('--mssp-username', required=False, help='MSSP login username')
+    parser.add_argument('--mssp-password', required=False, help='MSSP login password')
     parser.add_argument('--cc-address', required=False, help='IP/FQDN address of the Cyber Controller')
     parser.add_argument('--cc-username', required=False, help='Username for the Cyber Controller')
     parser.add_argument('--cc-password', required=False, help='Password for the Cyber Controller')
@@ -308,6 +308,9 @@ if __name__ == '__main__':
 
     # Direct export from MSSP and import to CC
     if not args.import_from_file:
+        if not all([args.mssp_address, args.mssp_username, args.mssp_password]):
+            parser.error("When not importing from a file, the following arguments are required: --mssp-address, --mssp-username, --mssp-password")
+        
         # Login to MSSP and fetch data
         session_id = login(f"https://{args.mssp_address}/api/auth/", args.mssp_username, args.mssp_password)
         if session_id:
