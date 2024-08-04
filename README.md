@@ -61,7 +61,7 @@ mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNA
 ## Options
 
 - `--mssp-address`: The IP address or hostname of the MSSP platform.
-- `--mssp-username`: Username for MSSP login.
+- `--mssp-username`: Username for MSSP login. the user must be of user role Operator-Admin.
 - `--mssp-password`: Password for MSSP login.
 - `--cc-address`: The IP address of the Cyber Controller.
 - `--cc-username`: Username for Cyber Controller login.

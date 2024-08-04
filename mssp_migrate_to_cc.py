@@ -46,17 +46,17 @@ def login(url, username, password):
     try:
         response = requests.post(url, headers=headers, data=payload, verify=False)
         if response.status_code == 200:
-            print("MSSP: Login successful")
+            logging.info("MSSP: Login successful")
             # Extract sessionid from cookies
             sessionid = response.cookies.get('sessionid')
             if sessionid:
                 return sessionid
             else:
-                print("Session ID not found in cookies")
+                logging.info("Session ID not found in cookies")
         else:
-            print(f"Login failed with status code {response.status_code}")
+            logging.info(f"Login failed with status code {response.status_code}")
     except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
+        logging.info(f"An error occurred: {e}")
     return None
 
 
@@ -305,7 +305,7 @@ if __name__ == '__main__':
         logging.error("Error parsing arguments.")
 
         # Print a custom error message and the help message from argparse
-        print("Error: Failed to parse the arguments. Please check the input arguments.")
+        logging.info("Error: Failed to parse the arguments. Please check the input arguments.")
         parser.print_help()
 
         sys.exit(e.code)
@@ -322,15 +322,15 @@ if __name__ == '__main__':
             # Optionally save to file
             if args.export_file:
                 save_data_to_json_file(structured_export, args.export_file)
-                print(f"Exported MSSP configuration saved to {args.export_file}")
+                logging.info(f"Exported MSSP configuration saved to {args.export_file}")
             config = structured_export
         else:
-            print("Failed to log in to MSSP.")
+            logging.info("Failed to log in to MSSP.")
             exit(1)
     else:
         # Load configuration from file
         if not args.config_file:
-            print("Config file path is required when importing from file.")
+            logging.info("Config file path is required when importing from file.")
             exit(1)
         config = load_config(args.config_file)
 
@@ -344,4 +344,4 @@ if __name__ == '__main__':
             else:
                 import_mssp_config(vision, config, new_user_password=args.initial_user_password, dry_run=args.dry_run)
     elif args.dry_run:
-        print("Warning: dry run was requested but some or all of the following args are missing: CC IP address, CC username, CC password.")
+        logging.info("Warning: dry run was requested but some or all of the following args are missing: CC IP address, CC username, CC password.")
