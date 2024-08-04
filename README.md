@@ -87,6 +87,7 @@ mssp_migrate_to_cc.py --mssp-address <MSSP_ADDRESS> --mssp-username <MSSP_USERNA
 - **Optional fields (if they exist):**
   > - Details
   > - Allow login only from this IP Address
+  > > - If the account has multiple IP Addresses in MSSP, the first one will be set.
 
 - **Default fields (regardless of the legacy users):**
   > - **Password** – all the users will get the following default password: `P@ssw0rd1!`
