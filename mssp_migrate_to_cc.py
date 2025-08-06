@@ -166,7 +166,7 @@ def build_users_info(filtered_users):
     users_info = []
 
     for user in filtered_users:
-        username = user.get('username', 'N/A')
+        username = user.get('username', 'N/A').replace('@', '_')
         account_oid = user.get('account', {}).get('_oid', 'N/A')
         current_account_roles = user.get('roles', {}).get('currentAccount', [])
         roles_string = ', '.join(current_account_roles) if current_account_roles else 'None'
